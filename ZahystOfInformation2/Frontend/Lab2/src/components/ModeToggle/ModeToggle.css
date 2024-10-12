@@ -1,0 +1,8 @@
+.mode-toggle button.active {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .mode-toggle button:hover {
+    background-color: #e0e0e0;
+  }

@@ -1,0 +1,47 @@
+using Microsoft.Extensions.FileProviders;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthorization();
+
+app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
+
+void ConfigureSpa(string path, string spaFolder)
+{
+    app.UseFileServer(new FileServerOptions
+    {
+        FileProvider = new PhysicalFileProvider(Path.Combine(Path.Combine(app.Environment.WebRootPath, spaFolder))),
+        RequestPath = new PathString(path),
+        RedirectToAppendTrailingSlash = false,
+        EnableDefaultFiles = true
+    });
+
+}
+
+ConfigureSpa("/lab1", "lab1");
+ConfigureSpa("/lab2", "lab2");
+
+app.Run();
