@@ -2,6 +2,7 @@
 {
     public class CesaroTestRequest
     {
+        // I zabuv getter i setter
         public List<int> sequence { get; set; }
     }
 
