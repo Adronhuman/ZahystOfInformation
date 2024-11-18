@@ -8,7 +8,6 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-
 import GenerateKeys from "./pages/GenerateKeys.tsx";
 import CipherPage from './pages/CipherPage.tsx';
 import Layout from './layout/Layout.tsx';

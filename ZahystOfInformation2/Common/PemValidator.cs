@@ -6,27 +6,50 @@
 
     public class PemValidator
     {
-        private const string PublicKeyPattern = @"-----BEGIN RSA PUBLIC KEY-----[\s\S]+?-----END RSA PUBLIC KEY-----";
-        private const string PrivateKeyPattern = @"-----BEGIN RSA PRIVATE KEY-----[\s\S]+?-----END RSA PRIVATE KEY-----";
+        private const string RsaPublicKeyPattern = @"-----BEGIN RSA PUBLIC KEY-----[\s\S]+?-----END RSA PUBLIC KEY-----";
+        private const string RsaPrivateKeyPattern = @"-----BEGIN RSA PRIVATE KEY-----[\s\S]+?-----END RSA PRIVATE KEY-----";
+        
+        private const string DsaPublicKeyPattern = @"-----BEGIN PUBLIC KEY-----[\s\S]+?-----END PUBLIC KEY-----";
+        private const string DsaPrivateKeyPattern = @"-----BEGIN PRIVATE KEY-----[\s\S]+?-----END PRIVATE KEY-----";
 
-        public static bool ValidatePublicKey(string publicKey)
+        public static bool ValidateDsaPublicKey(string publicKey)
         {
-            return IsValidPublicKey(publicKey) && IsValidBase64Content(publicKey);
+            return ValidatePublicKey(publicKey, DsaPublicKeyPattern);
         }
 
-        public static bool ValidatePrivateKey(string privateKey)
+        public static bool ValidateDsaPrivateKey(string privateKey)
         {
-            return IsValidPrivateKey(privateKey) && IsValidBase64Content(privateKey);
+            return ValidatePrivateKey(privateKey, DsaPrivateKeyPattern);
         }
 
-        private static bool IsValidPublicKey(string pemString)
+        public static bool ValidateRsaPublicKey(string publicKey)
         {
-            return Regex.IsMatch(pemString, PublicKeyPattern);
+            return ValidatePublicKey(publicKey, RsaPublicKeyPattern);
         }
 
-        private static bool IsValidPrivateKey(string pemString)
+        public static bool ValidateRsaPrivateKey(string privateKey)
         {
-            return Regex.IsMatch(pemString, PrivateKeyPattern);
+            return ValidatePrivateKey(privateKey, RsaPrivateKeyPattern);
+        }
+
+        private static bool ValidatePublicKey(string publicKey, string pattern)
+        {
+            return IsValidPublicKey(publicKey, pattern) && IsValidBase64Content(publicKey);
+        }
+
+        private static bool ValidatePrivateKey(string privateKey, string pattern)
+        {
+            return IsValidPrivateKey(privateKey, pattern) && IsValidBase64Content(privateKey);
+        }
+
+        private static bool IsValidPublicKey(string pemString, string pattern)
+        {
+            return Regex.IsMatch(pemString, pattern);
+        }
+
+        private static bool IsValidPrivateKey(string pemString, string pattern)
+        {
+            return Regex.IsMatch(pemString, pattern);
         }
 
         public static bool IsValidBase64Content(string pemString)

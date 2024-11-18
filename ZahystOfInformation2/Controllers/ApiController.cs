@@ -10,6 +10,7 @@ using ZahystOfInformation2.BLL.Lab1;
 using ZahystOfInformation2.BLL.Lab2;
 using ZahystOfInformation2.BLL.Lab3;
 using ZahystOfInformation2.BLL.Lab4;
+using ZahystOfInformation2.BLL.Lab5;
 using ZahystOfInformation2.Common;
 using ZahystOfInformation2.Models.Lab1;
 using ZahystOfInformation2.Models.Lab2;
@@ -117,7 +118,7 @@ namespace ZahystOfInformation2.Controllers
         }
 
         [HttpPost("rsa-generate-key-pair")]
-        public IActionResult GeneratePublicPrivate()
+        public IActionResult GenerateRSaPublicPrivate()
         {
             var keys = RSAHelper.GenerateKeys();
             return Ok(keys);
@@ -135,7 +136,7 @@ namespace ZahystOfInformation2.Controllers
             }
 
             string pem = publicPem.ReadAllText();
-            if (!PemValidator.ValidatePublicKey(pem))
+            if (!PemValidator.ValidateRsaPublicKey(pem))
             {
                 return WrongKeyFormat();
             }
@@ -162,7 +163,7 @@ namespace ZahystOfInformation2.Controllers
             }
 
             string pem = privatePem.ReadAllText();
-            if (!PemValidator.ValidatePrivateKey(pem))
+            if (!PemValidator.ValidateRsaPrivateKey(pem))
             {
                 return WrongKeyFormat();
             }
@@ -175,6 +176,46 @@ namespace ZahystOfInformation2.Controllers
             {
                 return CouldntDecrypt();
             }
+        }
+
+        [HttpPost("dsa-generate-key-pair")]
+        public IActionResult GeneratePublicPrivate()
+        {
+            var keys = DSAKeyPair.GenerateKeys();
+            return Ok(keys);
+        }
+
+        [HttpPost("dsa-signature")]
+        public IActionResult Sign([FromForm] string message, [FromQuery] bool isFile, [FromForm] IFormFile privatePem, [FromForm] IFormFile file)
+        {
+            message ??= string.Empty;
+            byte[] data = isFile ? file.ReadBytesFromFile() : Encoding.UTF8.GetBytes(message);
+
+            string pem = privatePem.ReadAllText();
+            if (!PemValidator.ValidateDsaPrivateKey(pem))
+            {
+                return WrongKeyFormat();
+            }
+
+            byte[] signature = DSSFacade.SignData(data, pem);
+            return Ok(new { result = Convert.ToBase64String(signature) });
+        }
+
+        [HttpPost("dsa-verify")]
+        public IActionResult Verify([FromForm] string message, [FromQuery] bool isFile, [FromForm] IFormFile publicPem, [FromForm] IFormFile file, [FromForm] IFormFile signature)
+        {
+            message ??= string.Empty;
+            byte[] data = isFile ? file.ReadBytesFromFile() : Encoding.UTF8.GetBytes(message);
+
+            string pem = publicPem.ReadAllText();
+            if (!PemValidator.ValidateDsaPublicKey(pem))
+            {
+                return WrongKeyFormat();
+            }
+
+            byte[] signatureBytes = Convert.FromBase64String(signature.ReadAllText());
+            var result = DSSFacade.VerifySignature(data, signatureBytes, pem);
+            return Ok(new { result = result.ToString() });
         }
 
         private IActionResult CouldntDecrypt()

@@ -45,5 +45,6 @@ ConfigureSpa("/lab1", "lab1");
 ConfigureSpa("/lab2", "lab2");
 ConfigureSpa("/lab3", "lab3");
 ConfigureSpa("/lab4", "lab4");
+ConfigureSpa("/lab5", "lab5");
 
 app.Run();
