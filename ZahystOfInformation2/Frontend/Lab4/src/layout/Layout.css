@@ -1,0 +1,10 @@
+.nav-link {
+    padding: 0px 10px 0px 10px;
+    /* border- */
+    border-color: aqua;
+    border: solid 1px;
+}
+
+.nav-link:has(.active) {
+    background-color: aqua;
+}

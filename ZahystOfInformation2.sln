@@ -5,7 +5,9 @@ VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZahystOfInformation2", "ZahystOfInformation2\ZahystOfInformation2.csproj", "{D3F3363B-200F-4626-838E-7ADE4109E31A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppForTesting", "ConsoleAppForTesting\ConsoleAppForTesting.csproj", "{A5F81440-7351-4DED-8F07-0103CC7563A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleAppForTesting", "ConsoleAppForTesting\ConsoleAppForTesting.csproj", "{A5F81440-7351-4DED-8F07-0103CC7563A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{EF400956-3258-4D25-927D-5D90F8B10975}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{A5F81440-7351-4DED-8F07-0103CC7563A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5F81440-7351-4DED-8F07-0103CC7563A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5F81440-7351-4DED-8F07-0103CC7563A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF400956-3258-4D25-927D-5D90F8B10975}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF400956-3258-4D25-927D-5D90F8B10975}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF400956-3258-4D25-927D-5D90F8B10975}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF400956-3258-4D25-927D-5D90F8B10975}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
